@@ -1,0 +1,47 @@
+<script>
+    let win = 0;
+    let lose = 0;
+    let tie = 0;
+    function pickrandom(){
+     return Math.ceil(Math.random()*3)
+    }
+    function computerplay(){
+        let ComputerSelection = pickrandom();
+        if (pickrandom == 1){
+            return ComputerSelection = `rock`;
+        } else if (pickrandom == 2){
+            return ComputerSelection = `paper`;
+        }
+        return ComputerSelection = `scissors`;
+    };
+    const PlayerSelection = `rock`
+    let WinRound = function(){
+        win++;
+        return `${ PlayerSelection } beats ${ ComputerSelection }`;
+    }; 
+    let LoseRound = function(){
+        lose++;
+        return `${ ComputerSelection } beats ${ PlayerSelection }`;
+    };
+    let TieRound = function(){
+        tie++;
+        return `Tie!`;
+    };
+    function playRound(PlayerSelection, ComputerSelection) {
+        computerplay()
+        if (ComputerSelection == `rock`){
+            return TieRound();   
+        }else if (ComputerSelection == `paper`){
+            return LoseRound();
+        }
+        return WinRound();
+    }
+    function game(){
+        console.log(playRound(PlayerSelection,ComputerSelection));
+        console.log(playRound(PlayerSelection,ComputerSelection));
+        console.log(playRound(PlayerSelection,ComputerSelection));
+        console.log(playRound(PlayerSelection,ComputerSelection));
+        console.log(playRound(PlayerSelection,ComputerSelection));
+    }
+    console.log(game());
+</script>

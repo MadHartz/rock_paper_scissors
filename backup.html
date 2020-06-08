@@ -1,0 +1,70 @@
+<script>
+    let win = 0;
+    let lose = 0;
+    let tie = 0;
+    let random;
+    function pickrandom(){
+        return Math.ceil(Math.random()*3)
+    }
+    function computerplay(){
+        ComputerSelection = pickrandom();
+        if (ComputerSelection == 1){
+            return ComputerSelection = `rock`;
+        } else if (ComputerSelection == 2){
+            return ComputerSelection = `paper`;
+        }
+        return ComputerSelection = `scissors`;
+    };
+    function WinRound(PlayerSelection, ComputerSelection){
+        win++;
+        return `${ PlayerSelection } beats ${ ComputerSelection }`;
+    }; 
+    function LoseRound(PlayerSelection, ComputerSelection){
+        lose++;
+        return `${ ComputerSelection } beats ${ PlayerSelection }`;
+    };
+    function TieRound(){
+        tie++;
+        return `Tie!`;
+    };
+    function playRound(PlayerSelection, ComputerSelection) {
+        PlayerSelection = PlayerSelection.toLowerCase();
+        switch (PlayerSelection) {
+            case `rock`:
+                if (ComputerSelection == `rock`){
+                    return TieRound();   
+                }else if (ComputerSelection == `paper`){
+                    return LoseRound(PlayerSelection,ComputerSelection);
+                }
+                return WinRound(PlayerSelection,ComputerSelection);
+            break;
+            case `paper`:
+                if (ComputerSelection == `paper`){
+                    return TieRound();   
+                }else if (ComputerSelection == `scissors`){
+                    return LoseRound(PlayerSelection,ComputerSelection);
+                }
+                return WinRound(PlayerSelection,ComputerSelection);
+            break;
+            case `scissors`:
+                if (ComputerSelection == `scissors`){
+                    return TieRound();   
+                }else if (ComputerSelection == `rock`){
+                    return LoseRound(PlayerSelection,ComputerSelection);
+                }
+                return WinRound(PlayerSelection,ComputerSelection);
+            break;
+            default:
+                alert(`Not a valid weapon`);
+        }
+    }
+    function game(){
+        for (let i = 0; i < 5; i++){
+            let ComputerSelection = computerplay();
+            let PlayerSelection = prompt(`Choose your weapon`);
+            console.log(playRound(PlayerSelection,ComputerSelection));
+        };
+        alert(`Player: ${ win } Wins! \nComputer: ${ lose } Wins! \n${ tie } Ties! `);
+    }
+    console.log(game());
+</script>

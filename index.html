@@ -1,70 +1,93 @@
+<html>
+
+<body>
+    <div class="buttons">
+        <button id="rock">rock</button>
+        <button id="paper">paper</button>
+        <button id="scissors">scissors</button>
+    </div>
+    <div id="results"></div>
+</body>
 <script>
-    let win = 0;
-    let lose = 0;
-    let tie = 0;
-    let random;
-    function pickrandom(){
-        return Math.ceil(Math.random()*3)
+    let round = 0;
+    let playerScore = 0;
+    let computerScore = 0;
+    function checkState() {
+        if (round == 5) {
+            if (playerScore > computerScore) {
+                alert("You Win!");
+            } else if (computerScore > playerScore) {
+                alert("You Lose!");
+            } else {
+                alert("Tie!!");
+            };
+            return;
+        };
     }
-    function computerplay(){
-        ComputerSelection = pickrandom();
-        if (ComputerSelection == 1){
-            return ComputerSelection = `rock`;
-        } else if (ComputerSelection == 2){
-            return ComputerSelection = `paper`;
+    function changeScore(playerScore, computerScore) {
+        document.getElementById('results').textContent = `Player ${playerScore} vs. ${computerScore} Computer`;
+    }
+    function computerplay() {
+        function pickrandom() {
+            return Math.floor(Math.random() * 3);
+        };
+        if (pickrandom() == 1) {
+            return `rock`;
+        } else if (pickrandom() == 2) {
+            return `paper`;
         }
-        return ComputerSelection = `scissors`;
+        return `scissors`;
     };
-    function WinRound(PlayerSelection, ComputerSelection){
-        win++;
-        return `${ PlayerSelection } beats ${ ComputerSelection }`;
-    }; 
-    function LoseRound(PlayerSelection, ComputerSelection){
-        lose++;
-        return `${ ComputerSelection } beats ${ PlayerSelection }`;
-    };
-    function TieRound(){
-        tie++;
-        return `Tie!`;
-    };
-    function playRound(PlayerSelection, ComputerSelection) {
-        PlayerSelection = PlayerSelection.toLowerCase();
+    const results = document.querySelector('#results');
+    const score = document.createElement('div');
+    score.classList.add('score');
+    score.textContent = `Player ${playerScore} vs. ${computerScore} Computer`;
+    results.appendChild(score);
+
+    function game(){
+        playRound();
+        changeScore(playerScore, computerScore);
+        checkState();
+    }
+
+    function playRound() {
+        round++;
+        let PlayerSelection = event.target.id;
+        let ComputerSelection = computerplay();
         switch (PlayerSelection) {
             case `rock`:
-                if (ComputerSelection == `rock`){
-                    return TieRound();   
-                }else if (ComputerSelection == `paper`){
-                    return LoseRound(PlayerSelection,ComputerSelection);
-                }
-                return WinRound(PlayerSelection,ComputerSelection);
-            break;
+                if (ComputerSelection == `rock`) {
+                    return;
+                } else if (ComputerSelection == `paper`) {
+                    return computerScore++;
+                } else {
+                    return playerScore;
+                };
+                break;
             case `paper`:
-                if (ComputerSelection == `paper`){
-                    return TieRound();   
-                }else if (ComputerSelection == `scissors`){
-                    return LoseRound(PlayerSelection,ComputerSelection);
-                }
-                return WinRound(PlayerSelection,ComputerSelection);
-            break;
+                if (ComputerSelection == `paper`) {
+                    return;
+                } else if (ComputerSelection == `scissors`) {
+                    return computerScore++;
+                } else {
+                    return playerScore++;
+                };
+                break;
             case `scissors`:
-                if (ComputerSelection == `scissors`){
-                    return TieRound();   
-                }else if (ComputerSelection == `rock`){
-                    return LoseRound(PlayerSelection,ComputerSelection);
-                }
-                return WinRound(PlayerSelection,ComputerSelection);
-            break;
-            default:
-                alert(`Not a valid weapon`);
-        }
-    }
-    function game(){
-        for (let i = 0; i < 5; i++){
-            let ComputerSelection = computerplay();
-            let PlayerSelection = prompt(`Choose your weapon`);
-            console.log(playRound(PlayerSelection,ComputerSelection));
+                if (ComputerSelection == `scissors`) {
+                    return;
+                } else if (ComputerSelection == `rock`) {
+                    return computerScore++;
+                } else {
+                    return playerScore++;
+                };
+                break;
         };
-        alert(`Player: ${ win } Wins! \nComputer: ${ lose } Wins! \n${ tie } Ties! `);
     }
-    console.log(game());
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach((button) => {
+        button.addEventListener('click', game);
+    });
 </script>
+
+</html>
